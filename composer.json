@@ -1,0 +1,10 @@
+{
+    "name": "Vertabelo/VertabeloPropel",
+    "description": "Converts Vertabelo.xml into Propel schema.xml file",
+    "require": {
+        "symfony/console": "*"
+    },
+    "autoload": {
+        "psr-4": {"Vertabelo\\": "src/"}
+    }
+}
