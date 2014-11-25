@@ -1,0 +1,20 @@
+propel:
+  database:
+      connections:
+          bookshop:
+              adapter: mysql
+              classname: Propel\Runtime\Connection\ConnectionWrapper
+              dsn: "mysql:host=localhost;dbname=bookshop"
+              user: bookshop
+              password: 
+              attributes:
+  runtime:
+      defaultConnection: bookshop
+      connections:
+          - bookshop
+  generator:
+      defaultConnection: bookshop
+      connections:
+          - bookshop
+
+
