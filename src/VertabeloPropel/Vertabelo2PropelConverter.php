@@ -68,7 +68,7 @@ class Vertabelo2PropelConverter {
     }
 
     function setColumnType($propelColumn, $columnType){
-        // FIXME to wymaga obsługi typów wspieranych przez Propel
+        // FIXME this doesn't work
         $typeParts = $this->splitType($columnType);
         $propelColumn->addAttribute('type', $typeParts[0]);
 
@@ -100,9 +100,25 @@ class Vertabelo2PropelConverter {
             if ($column->DefaultValue != '') {
                 $propelColumn->addAttribute('defaultExpr', $column->DefaultValue);
             }
+            
+            $this->handleColumnAutoincrement($column, $propelColumn);
 
             $map[(string)$column['Id']] = $propelColumn;
             return $map;
+    }
+    
+    function handleColumnAutoincrement($column, $propelColumn) {
+        foreach ($column->Properties as $property) {
+            $value = $property->Property;
+            // MySQL or SQLite
+            if ($value->Name == "Auto_increment" || $value == "Autoincrement") {
+                $propelColumn->addAttribute("autoIncrement", "true");
+            }
+        }
+        // pgsql
+        if ($column->Type == 'serial') {
+            $propelColumn->addAttribute("autoIncrement", "true");
+        }
     }
     
     function createViewColumn($propelTable, $column, $map) {
