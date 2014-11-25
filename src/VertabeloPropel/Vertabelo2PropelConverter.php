@@ -23,11 +23,11 @@ use Vertabelo\VertabeloPropel\TypeMapping;
 class Vertabelo2PropelConverter {
     private $output;
     
-    function __construct($output) {
+    public function __construct($output) {
         $this->output = $output;
     }
     
-    function createDatabase($dbName, $defaultIdMethod) {
+    protected function createDatabase($dbName, $defaultIdMethod) {
         $this->propelDatabase = new SimpleXMLElement('<database></database>');
         $this->propelDatabase->addAttribute('name', $dbName);
         $this->propelDatabase->addAttribute('defaultIdMethod', $defaultIdMethod);
@@ -57,8 +57,10 @@ class Vertabelo2PropelConverter {
         echo $this->save($propelSchemaFile, $propelDatabase);
     }
 
-    function splitType($type) {
+    protected function getPropelType($type) {
         $parts = preg_split("/[\(\),]/", strtolower($type), -1, PREG_SPLIT_NO_EMPTY);
+        
+        var_dump($parts);
 
         $typeName = $parts[0];
         
@@ -67,21 +69,22 @@ class Vertabelo2PropelConverter {
         return $parts;
     }
 
-    function setColumnType($propelColumn, $columnType){
+    protected function setColumnType($propelColumn, $columnType){
         // FIXME this doesn't work
-        $typeParts = $this->splitType($columnType);
-        $propelColumn->addAttribute('type', $typeParts[0]);
+        $typeParts = PropelType::fromVertabeloType($columnType);
+                //$this->getPropelType($columnType);
+        $propelColumn->addAttribute('type', $typeParts->name);
 
-        if (count($typeParts) > 1) {
-            $propelColumn->addAttribute('size', $typeParts[1]);
+        if ($typeParts->size != NULL) {
+            $propelColumn->addAttribute('size', $typeParts->size);
         }
-        if (count($typeParts) > 2) {
-            $propelColumn->addAttribute('scale', $typeParts[2]);
+        if ($typeParts->precision != NULL) {
+            $propelColumn->addAttribute('scale', $typeParts->precision);
         }
         $propelColumn->addAttribute('sqlType', $columnType);
     }
     
-    function createColumn($propelTable, $column, $map) {
+    protected function createColumn($propelTable, $column, $map) {
             $propelColumn = $propelTable->addChild('column');
             $propelColumn->addAttribute('name', $column->Name);
 
@@ -107,7 +110,7 @@ class Vertabelo2PropelConverter {
             return $map;
     }
     
-    function handleColumnAutoincrement($column, $propelColumn) {
+    protected function handleColumnAutoincrement($column, $propelColumn) {
         foreach ($column->Properties as $property) {
             $value = $property->Property;
             // MySQL or SQLite
@@ -121,7 +124,7 @@ class Vertabelo2PropelConverter {
         }
     }
     
-    function createViewColumn($propelTable, $column, $map) {
+    protected function createViewColumn($propelTable, $column, $map) {
             $propelColumn = $propelTable->addChild('column');
             $propelColumn->addAttribute('name', $column->Name);
 
@@ -135,7 +138,7 @@ class Vertabelo2PropelConverter {
             return $map;
     }
 
-    function createIndex($propelTable, $index, $map) {
+    protected function createIndex($propelTable, $index, $map) {
         $propelIndex = $propelTable->addChild('index');
 
         $propelIndex->addAttribute('name', $index->Name);
@@ -152,7 +155,7 @@ class Vertabelo2PropelConverter {
         return $map;
     }
 
-    function createAlternateKey($propelTable, $alternateKey, $map) {
+    protected function createAlternateKey($propelTable, $alternateKey, $map) {
         $propelUnique = $propelTable->addChild('unique');
         $propelUnique->addAttribute('name', $alternateKey->Name);
 
@@ -167,7 +170,7 @@ class Vertabelo2PropelConverter {
         return $map;
     }
 
-    function createTable($propelDatabase, $table, $map) {
+    protected function createTable($propelDatabase, $table, $map) {
             $propelTable = $propelDatabase->addChild('table');
             $propelTable->addAttribute('name', $table->Name);
             
@@ -191,7 +194,7 @@ class Vertabelo2PropelConverter {
             return $map;
     }
     
-    function createView($propelDatabase, $view, $map) {
+    protected function createView($propelDatabase, $view, $map) {
         $propelTable = $propelDatabase->addChild('table');
         $propelTable->addAttribute('name', $view->Name);
 
@@ -210,7 +213,7 @@ class Vertabelo2PropelConverter {
         return $map;
     }
 
-    function createForeignKey($reference, $map) {
+    protected function createForeignKey($reference, $map) {
         $fkTableId = (string)$reference->FKTable;
         $pkTableId = (string)$reference->PKTable;
         $fkPropelTable = $map[$fkTableId];
@@ -239,7 +242,7 @@ class Vertabelo2PropelConverter {
     }
     
 
-    function getAction($actionType, $action, $referenceId) {
+    protected function getAction($actionType, $action, $referenceId) {
         if ($action == 'None') {
             return 'none';
         }
@@ -268,7 +271,7 @@ class Vertabelo2PropelConverter {
         return null;
     }
 
-    function save($file, $xml) {
+    protected function save($file, $xml) {
         $dom = dom_import_simplexml($xml)->ownerDocument;
         $dom->formatOutput = true;
         $dom->save($file);
