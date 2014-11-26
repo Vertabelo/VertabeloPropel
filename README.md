@@ -70,7 +70,7 @@ This will update  VertabeloPropel into the ``vendor`` directory in your project 
 
 Run the script without any arguments, to see the list of available options.
 
-    ```bash
-    vendor/bin/vertabelo-propel.php 
-    ```
+```bash
+vendor/bin/vertabelo-propel.php 
+```
 
