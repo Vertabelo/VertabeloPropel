@@ -10,13 +10,13 @@ VertabeloPropel uses [Composer] (https://getcomposer.org/) to manage project dep
 ## Installation via Composer
 
 1. Create a file ``composer.json``:
-```
-{
-    "require": {
-        "vertabelo/vertabelo-propel": "*@dev"
-    }
-}
-```
+   ```
+   {
+       "require": {
+          "vertabelo/vertabelo-propel": "*@dev"
+       }
+   }
+   ```
 2. Run Composer.
 ```
 composer install
@@ -24,7 +24,7 @@ composer install
 This will download VertabeloPropel into the ``vendor`` directory in your project directory.
 
 ## Installation via Git
-If you don't want to 
+If you don't want to install VertabeloPropel with Composer, you can clone the GitHub repository.
 
 1. Clone the repository.
 ```
@@ -44,13 +44,13 @@ This will update  VertabeloPropel into the ``vendor`` directory in your project 
 2. Download the model as an XML file.
 3. Run the vertabelo-propel.php script.
   * If you installed VertabeloPropel via Composer, run
-```
-vendor/bin/vertabelo-propel.php -i model.xml -o schema.xml --database-name my_db --default-id-method native
-```
+  ```
+  vendor/bin/vertabelo-propel.php -i model.xml -o schema.xml --database-name my_db --default-id-method native
+  ```
   * If you cloned the GitHub repository, run
-```
-./bin/vertabelo-propel.php -i model.xml -o schema.xml --database-name my_db --default-id-method native
-```
+  ```
+  ./bin/vertabelo-propel.php -i model.xml -o schema.xml --database-name my_db --default-id-method native
+  ```
 4. Your Propel's schema.xml file is generated. Proceed with Propel as usual.
 
 ## Getting help
