@@ -1,6 +1,6 @@
 {
     "name": "vertabelo/vertabelo-propel",
-    "description": "Converts Vertabelo.xml into Propel schema.xml file",
+    "description": "Converts Vertabelo xml file into Propel schema.xml file",
     "keywords": ["propel","vertabelo", "orm", "database"],
     "homepage": "http://github.com/Vertabelo/VertabeloPropel",
     "license": "Apache-2.0",
