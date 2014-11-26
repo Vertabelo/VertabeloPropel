@@ -10,13 +10,15 @@ VertabeloPropel uses [Composer] (https://getcomposer.org/) to manage project dep
 ## Installation via Composer
 
 1. Create a file ``composer.json``:
-   ```
-   {
+
+    ```
+    {
        "require": {
           "vertabelo/vertabelo-propel": "*@dev"
        }
-   }
-   ```
+    }
+    ```
+
 2. Run Composer.
 ```
 composer install
