@@ -9,5 +9,8 @@
     },
     "autoload": {
         "psr-4": {"Vertabelo\\": "src/"}
-    }
+    },
+    "bin": [
+	"bin/vertabelo-propel.php"
+    ]
 }
