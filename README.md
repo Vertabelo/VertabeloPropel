@@ -73,3 +73,4 @@ Run the script without any arguments, to see the list of available options.
     ```bash
     vendor/bin/vertabelo-propel.php 
     ```
+
