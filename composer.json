@@ -1,5 +1,5 @@
 {
-    "name": "Vertabelo/VertabeloPropel",
+    "name": "vertabelo/vertabelo-propel",
     "description": "Converts Vertabelo.xml into Propel schema.xml file",
     "require": {
         "symfony/console": "*"
