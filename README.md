@@ -7,8 +7,6 @@ Converts [Vertabelo](http://www.vertabelo.com) XML file to [Propel's](http://pro
 
 VertabeloPropel uses [Composer] (https://getcomposer.org/) to manage project dependencies.
 
-## Installation via Composer
-
 1. Create a file ``composer.json``:
 
     ```json
@@ -25,27 +23,7 @@ VertabeloPropel uses [Composer] (https://getcomposer.org/) to manage project dep
     composer install
     ```
 
-
-
 This will download VertabeloPropel into the ``vendor`` directory in your project directory.
-
-## Installation via Git
-If you don't want to install VertabeloPropel with Composer, you can clone the GitHub repository.
-
-1. Clone the repository.
-
-    ```bash
-    git clone https://github.com/Vertabelo/VertabeloPropel
-    ```
-
-2. Run Composer.
-
-    ```bash
-    cd VertabeloPropel
-    composer update
-    ```
-
-This will update  VertabeloPropel into the ``vendor`` directory in your project directory.
 
 # Usage
 
