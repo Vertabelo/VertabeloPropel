@@ -18,7 +18,6 @@
 namespace Vertabelo\VertabeloPropel;
 
 use SimpleXMLElement;
-use Vertabelo\VertabeloPropel\TypeMapping;
 
 class Vertabelo2PropelConverter {
     private $output;
@@ -57,22 +56,8 @@ class Vertabelo2PropelConverter {
         echo $this->save($propelSchemaFile, $propelDatabase);
     }
 
-    protected function getPropelType($type) {
-        $parts = preg_split("/[\(\),]/", strtolower($type), -1, PREG_SPLIT_NO_EMPTY);
-        
-        var_dump($parts);
-
-        $typeName = $parts[0];
-        
-        $typeMapping = (new TypeMapping())->getTypeMapping();
-        $parts[0] = $typeMapping[$typeName];
-        return $parts;
-    }
-
     protected function setColumnType($propelColumn, $columnType){
-        // FIXME this doesn't work
         $typeParts = PropelType::fromVertabeloType($columnType);
-                //$this->getPropelType($columnType);
         $propelColumn->addAttribute('type', $typeParts->name);
 
         if ($typeParts->size != NULL) {
@@ -260,7 +245,6 @@ class Vertabelo2PropelConverter {
         }
         
         if ($action == 'SetDefault') {
-            // FIXME: warning
             $this->output->writeln('<comment>'. 
                     'WARNING: reference '. $referenceId
                     . ' ' . $actionType . ' value \'SetDefault\' is not supported by propel, propel value set to \'none\'.'  
