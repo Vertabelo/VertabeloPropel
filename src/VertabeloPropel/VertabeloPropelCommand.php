@@ -101,9 +101,23 @@ class VertabeloPropelCommand extends Command
         $this->validateArguments($output, $inputFile, $outputFile, $defaultIdMethod);
         
         $output->writeln('Generating Propel schema.xml ...');
-        $converter = new Vertabelo2PropelConverter($output);
+
+        $vertabeloDatabase = simplexml_load_file($inputFile);
+
+        $version = (string)$vertabeloDatabase['VersionId'];
+
+
+        if ($version  == "2.2" || $version  == "2.1") {
+            $converter = new Vertabelo2PropelConverter_v2_2($output);
+        } else if ($version == "2.3") {
+            $converter = new Vertabelo2PropelConverter_v2_3($output);
+        } else {
+            $output->writeln('ERROR: Vertabelo XML format version "' . $version .  '" is not supported');
+            return;
+        }
+
         $converter->run(
-            $inputFile,
+            $vertabeloDatabase,
             $outputFile,
             $dbName,
             $defaultIdMethod,

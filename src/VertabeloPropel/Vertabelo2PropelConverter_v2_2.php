@@ -19,7 +19,7 @@ namespace Vertabelo\VertabeloPropel;
 
 use SimpleXMLElement;
 
-class Vertabelo2PropelConverter {
+class Vertabelo2PropelConverter_v2_2 {
     private $output;
     
     public function __construct($output) {
@@ -34,9 +34,9 @@ class Vertabelo2PropelConverter {
         return $this->propelDatabase;
     }
     
-    public function run($vertabeloXmlFile, $propelSchemaFile, $dbName, 
+    public function run($vertabeloDatabase, $propelSchemaFile, $dbName, 
             $defaultIdMethod, $generateViews) {
-        $vertabeloDatabase = simplexml_load_file($vertabeloXmlFile);
+       
 
         $map = array();
         $propelDatabase = $this->createDatabase($dbName, $defaultIdMethod);
